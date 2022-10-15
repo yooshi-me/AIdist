@@ -75,6 +75,9 @@ class Model():
             x2 = x1 + (y2 - y1)
         else:
             y2 = y1 + (x2 - x1)
+        
+        new_img = self.before_image.crop((x1,y1,x2,y2))
+        new_img.save("new.png")
 
         # x1 <= x2 になるように座標を調節
         if x1 <= x2:
