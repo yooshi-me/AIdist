@@ -52,7 +52,7 @@ def pos_est_rect(file_name, wh=100, time_out=120):
             cv2.imwrite(trim_name, trim_array)
 
 
-    h,w,_ =  img.shape  
+    #h,w,_ =  img.shape  
     img_mes = img.copy() 
     print(img.shape)
     print('Quit -> ESC Key ')
@@ -115,5 +115,5 @@ def trim(array, x, y, width, height):
 
 if __name__ == '__main__':
 # test sampleとしてlenaさんを利用しています。
-    pos_est_rect(file_name='lena.jpg', time_out=120)
+    pos_est_rect(file_name='./lena.jpg', time_out=120)
 
