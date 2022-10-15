@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bae app</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='stylesheet.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='responsive.css')}}">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+        </div>
+        <a href="#" class="menu-icon"><span class="fa fa-bars"></span></a>
+        <div class="header-right">
+            <a href="/">戻る</a>
+            <a href="/post">新規投稿</a>
+            <a href="/mypage">マイページ</a>
+        </div>
+      </div>
+    </header>
+    {% block content %}
+    {% endblock %}
+    <footer>
+        <div class="container">
+          <img src="{{url_for('static', filename='img/study.jpeg')}}">
+          <p>Presented by てすとべんきょうず</p>
+        </div>
+      </footer>
+</body>
+</html> 
