@@ -1,1 +1,168 @@
-from torch.utils.data import Dataset
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision
+import torchvision.transforms as transforms
+import torch.optim as optim
+import matplotlib.pyplot as plt
+import numpy as np
+from dataset import get_loader,CustomImageDataset
+import os
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+import datetime
+
+
+class Net(nn.Module):
+    def __init__(self):
+        super(Net,self).__init__()
+        self.conv1 = nn.Conv2d(3,64,5,padding=2)
+        self.conv2 = nn.Conv2d(64,64,5,padding=2)
+        self.pool = nn.MaxPool2d(2,2)
+        self.conv3 = nn.Conv2d(64,128,3,padding=1)
+        self.conv4 = nn.Conv2d(128,128,3,padding=1)
+        self.conv5 = nn.Conv2d(128,256,3,padding=1)
+        self.conv6 = nn.Conv2d(256,256,3,padding=1)
+        self.fc1 = nn.Linear(4*4*256,4096)
+        self.fc2 = nn.Linear(4096,1)
+        self.sigmoid = nn.Sigmoid()
+        self.dropout = nn.Dropout(0.25)
+    
+    def forward(self,x):
+        x = F.relu(self.conv1(x))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = self.dropout(x)
+        x = F.relu(self.conv3(x))
+        x = self.pool(F.relu(self.conv4(x)))
+        x = self.dropout(x)
+        x = F.relu(self.conv5(x))
+        x = self.pool(F.relu(self.conv6(x)))
+        x = self.dropout(x)
+        x = x.view(-1,4*4*256)
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        x = self.sigmoid(x)
+
+        return x
+
+
+def google_drive_accese():
+
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()
+    drive = GoogleDrive(gauth)
+
+def main():
+    epochs = 10
+    batch_size = 10
+    lr = 1e-3
+
+    # 出力用ディレクトリ準備
+    paths_list_path = "./data/pahts_list.csv"
+    out_path = "./out"
+    out_path = os.path.join(out_path,datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
+
+
+
+    #google_drive_accese()
+    trainloader,testloader = get_loader(paths_list_path,batch_size)
+
+    # グラフ準備
+    acc_fig = plt.figure(figsize=(12,8))
+    plt.rcParams["font.size"] = 25
+    acc_ax = acc_fig.add_subplot(111,xlabel="Epoch",ylabel="Accuracy")
+    acc_ax.set_ylim(0,100)
+
+    loss_fig = plt.figure(figsize=(12,8))
+    plt.rcParams["font.size"] = 25
+    loss_ax = loss_fig.add_subplot(111,xlabel="Epoch",ylabel="Loss")
+
+
+    # モデル準備   
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    net = Net()
+    net = net.to(device)
+
+    optimizer = optim.Adam(net.parameters(),lr=0.001)
+    loss_fn = nn.BCELoss()
+    data_for_glaph = {"train":[],"test":[]}
+    
+    try:
+        for epoch in range(epochs):
+            running_loss = 0
+            train_size = len(trainloader.dataset)
+            print(f"epoch:{epoch+1:>d} ------------------------")
+            for i, (inputs,labels) in enumerate(trainloader):
+                correct = 0
+                optimizer.zero_grad()
+                inputs,labels = inputs.to(device),labels.to(device)
+
+                outputs = net(inputs)
+                outputs = torch.flatten(outputs)
+                labels = labels.to(torch.float32)
+                loss = loss_fn(outputs,labels)
+
+                running_loss += loss.item()
+                predicted = torch.where(outputs<0.5,0,1)
+                correct += (predicted==labels).sum().item()
+                loss.backward()
+                optimizer.step()
+
+                if i % 100 == 99: 
+                    running_loss /= 100
+                    print(f"loss:{running_loss:>5f} [{i*len(inputs)}]/[{train_size}]")
+                    running_loss = 0
+            
+            all_loss = loss.item()
+            correct /= inputs.size(0)
+            correct *= 100
+            
+            data_for_glaph["train"].append([correct,all_loss])
+            print(f"Accuracy: {correct:>5f}% loss:{all_loss:>5f}")
+
+            test_size = len(testloader.dataset)
+            all_loss = 0
+            correct = 0
+            with torch.no_grad():
+                for inputs,labels in testloader:
+                    inputs,labels = inputs.to(device),labels.to(device)
+
+                    outputs = net(inputs)
+                    outputs = torch.flatten(outputs)
+                    labels = labels.to(torch.float32)
+                    loss = loss_fn(outputs,labels)
+                    all_loss += loss.item()
+                    predicted = torch.where(outputs<0.5,0,1)
+                    correct += (predicted==labels).sum().item()
+                all_loss /= inputs.size(0)
+                correct /= test_size
+                correct *= 100
+                data_for_glaph["test"].append([correct,all_loss])
+                print(f"Accuracy: {correct:>5f}% loss:{all_loss:>5f}")
+    
+    except KeyboardInterrupt:
+        pass
+    
+    
+    # グラフプロット
+    for mode in ["train","test"]:
+        data_for_glaph[mode] = np.array(data_for_glaph[mode])
+        acc_ax.plot(range(len(data_for_glaph[mode])),data_for_glaph[mode][:,0],label=mode)
+        loss_ax.plot(range(len(data_for_glaph[mode])),data_for_glaph[mode][:,1],label=mode)
+    
+    # 結果出力、保存
+    os.mkdir(out_path)
+    torch.save(net, os.path.join(out_path, 'model_weight.pth'))
+    acc_fig.legend(bbox_to_anchor=(1, 1), loc='upper right', borderaxespad=0)
+    acc_fig.savefig(os.path.join(out_path,"accuracy_figure"))
+    loss_fig.legend(bbox_to_anchor=(1, 1), loc='upper right', borderaxespad=0)    
+    loss_fig.savefig(os.path.join(out_path,"loss_figure"))
+
+
+    
+
+
+if __name__ == "__main__":
+    main()

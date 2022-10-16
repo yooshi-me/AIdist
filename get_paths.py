@@ -22,7 +22,7 @@ for file in cifar10_files:
 
     label = file.split("\\")[-2]
     if labels[label] >= 2000:
-        break
+        continue
     labels[label] += 1
     all_paths.append([file,label,1])
 
