@@ -43,8 +43,3 @@ class CustomImageDataset(Dataset):
         if self.target_transform:
             label = self.target_transform(label)
         return image, label
-
-trainloader,testloader = get_loader("./data/pahts_list.csv")
-for inputs,labels in trainloader:
-    plt.imshow(inputs[0].permute(1, 2, 0))
-    plt.show()
