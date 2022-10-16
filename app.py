@@ -2,14 +2,13 @@ from flask import Flask
 from flask import Flask,flash
 from flask import render_template,request,redirect
 
+
+
 # ファイル拡張子の判定
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
-
-def model(img):
-    return 1
 
 app = Flask(__name__)
 @app.route('/')
@@ -26,7 +25,7 @@ def post():
 
         # ファイルの拡張子が適切な場合にモデルに渡す
         if img and allowed_file(img.filename):
-            result = model(img)
+
             return redirect('/result',result)
         else:
             flash('png、jpg、jpeg形式のファイルを選択してください')

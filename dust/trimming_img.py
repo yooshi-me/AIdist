@@ -436,16 +436,3 @@ class Controller():
 
                 # メッセージを更新
                 self.message = "トリミングしました！"
-
-
-app = tkinter.Tk()
-
-# アプリのウィンドウのサイズ設定
-app.geometry("1000x430")
-app.title("トリミングアプリ")
-
-model = Model()
-view = View(app, model)
-controller = Controller(app, model, view)
-
-app.mainloop()

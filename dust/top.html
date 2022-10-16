@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="http://localhost:5000/top" enctype="multipart/form-data" method="POST"> 
+    <input type="file" name="photo" />
+    <input type="submit" value="新規投稿!!!" />
+</form>
+
+ <h1>TOPページです</h1>
+ <p>画像をアップロードしてね</p>
+ <a href="/">初期画面へ</a>
+ <a href="/error">エラー画面へ</a>
+ <a href="/result">結果画面へ</a>
+{% endblock %}
