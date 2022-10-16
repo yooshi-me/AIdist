@@ -7,6 +7,7 @@ from torchvision.io import read_image
 from torch.utils.data import Dataset
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+import PIL
 
 def get_loader(paths_list_path):
     paths_dataframe = pd.read_csv(paths_list_path)
@@ -14,7 +15,8 @@ def get_loader(paths_list_path):
     train_dir, test_dir, train_label, test_label = train_test_split(paths_dataframe["path"].to_list(),paths_dataframe["generated_flag"].to_list(),test_size=0.2,random_state=42,shuffle=True, stratify=paths_dataframe["generated_flag"].to_list())
 
     transform = transforms.Compose(
-        [transforms.Resize(32)]
+        [transforms.ToTensor(), # ToTensorによる変換でfloatになる
+         transforms.Resize(32)]
     )
     
     traindataset = CustomImageDataset(img_labels=train_label, img_dir=train_dir,transform=transform,target_transform=None)
@@ -36,7 +38,7 @@ class CustomImageDataset(Dataset):
         return len(self.img_labels)
 
     def __getitem__(self, idx):
-        image = read_image(self.img_dir[idx])
+        image = PIL.Image.open(self.img_dir[idx]) # PILで画像を開く(ToTensorのために必要)
         label = self.img_labels[idx]
         if self.transform:
             image = self.transform(image)
@@ -45,6 +47,13 @@ class CustomImageDataset(Dataset):
         return image, label
 
 trainloader,testloader = get_loader("./data/pahts_list.csv")
-for inputs,labels in trainloader:
-    plt.imshow(inputs[0].permute(1, 2, 0))
-    plt.show()
+
+# 表示部分を1回のイテレーションに変更
+train_image, train_label = next(iter(trainloader))
+print(f"Feature batch shape: {train_image.size()}")
+print(f"Labels batch shape: {train_label.size()}")
+img = train_image[0].squeeze()
+label = train_label[0]
+plt.imshow(img.permute(1, 2, 0))
+plt.show()
+print(f"Label: {label}")
