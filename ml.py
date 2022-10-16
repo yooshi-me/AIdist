@@ -56,7 +56,7 @@ def google_drive_accese():
 
 def main():
     epochs = 10
-    batch_size = 10
+    batch_size = 50
     lr = 1e-3
 
     # 出力用ディレクトリ準備
@@ -82,6 +82,7 @@ def main():
 
     # モデル準備   
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    print("Device is ",device)
     net = Net()
     net = net.to(device)
 
@@ -92,6 +93,7 @@ def main():
     try:
         for epoch in range(epochs):
             running_loss = 0
+            all_loss = 0
             train_size = len(trainloader.dataset)
             print(f"epoch:{epoch+1:>d} ------------------------")
             for i, (inputs,labels) in enumerate(trainloader):
@@ -105,6 +107,7 @@ def main():
                 loss = loss_fn(outputs,labels)
 
                 running_loss += loss.item()
+                all_loss += loss.item()
                 predicted = torch.where(outputs<0.5,0,1)
                 correct += (predicted==labels).sum().item()
                 loss.backward()
@@ -115,7 +118,7 @@ def main():
                     print(f"loss:{running_loss:>5f} [{i*len(inputs)}]/[{train_size}]")
                     running_loss = 0
             
-            all_loss = loss.item()
+            all_loss /= len(trainloader)
             correct /= inputs.size(0)
             correct *= 100
             
@@ -136,7 +139,7 @@ def main():
                     all_loss += loss.item()
                     predicted = torch.where(outputs<0.5,0,1)
                     correct += (predicted==labels).sum().item()
-                all_loss /= inputs.size(0)
+                all_loss /= len(testloader)
                 correct /= test_size
                 correct *= 100
                 data_for_glaph["test"].append([correct,all_loss])
@@ -147,10 +150,11 @@ def main():
     
     
     # グラフプロット
-    for mode in ["train","test"]:
-        data_for_glaph[mode] = np.array(data_for_glaph[mode])
-        acc_ax.plot(range(len(data_for_glaph[mode])),data_for_glaph[mode][:,0],label=mode)
-        loss_ax.plot(range(len(data_for_glaph[mode])),data_for_glaph[mode][:,1],label=mode)
+    if len(data_for_glaph["test"]) > 1:
+        for mode in ["train","test"]:
+            data_for_glaph[mode] = np.array(data_for_glaph[mode])
+            acc_ax.plot(range(len(data_for_glaph[mode])),data_for_glaph[mode][:,0],label=mode)
+            loss_ax.plot(range(len(data_for_glaph[mode])),data_for_glaph[mode][:,1],label=mode)
     
     # 結果出力、保存
     os.mkdir(out_path)
