@@ -14,12 +14,12 @@ var controlCropper = document.querySelectorAll('.bottom-control .ctrl-cropper sv
 var lockCropper = document.querySelectorAll('.bottom-control .lock svg')
 var dargMode = document.querySelectorAll('.bottom-control .drag-mode svg')
 
-function send_url(url_send){
+function send_data(blob){
     console.log("送信します")
-    var base64 = url_send;
+    var base64 = blob;
 
     var fData = new FormData();
-    fData.append('url_send', base64);
+    fData.append('blob', base64);
 
     //ajax送信
     $.ajax({
@@ -122,12 +122,37 @@ hiddenUpload.onchange = () => {
 
             // download cropped image
             actionButton[1].onclick = () => {
-                actionButton[1].innerText = '...'
+                //canvas elementを取得
+                var canvas = document.getElementById('canvas');
+                //base64データを取得（エンコード）
+                var base64 = canvas.toDataURL('image/png');
+
+                var fData = new FormData();
+                fData.append('img', base64);
+
+                //ajax送信
+                $.ajax({
+                    //画像処理サーバーに返す場合
+                    url: 'http://127.0.0.1:5000/top',   
+                    type: 'POST',
+                    data: fData ,
+                    contentType: false,
+                    processData: false,
+                    success: function(data, dataType) {
+                        //非同期で通信成功時に読み出される [200 OK 時]
+                        console.log('Success', data);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //非同期で通信失敗時に読み出される
+                        console.log('Error : ' + errorThrown);
+                    }
+                });
+                /*actionButton[1].innerText = '...'
                 cropper.getCroppedCanvas().toBlob((blob) => {
                     var downloadUrl = window.URL.createObjectURL(blob)
                     actionButton[1].innerText = 'Download'
-                    send_url(downloadUrl)
-                })
+                    send_data(blob)
+                })*/
             }
         }
     }
