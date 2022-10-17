@@ -1,8 +1,6 @@
 from flask import Flask
 from flask import Flask,flash
-from flask import render_template,request,redirect
-
-
+from flask import render_template,request,redirect,url_for
 
 # ファイル拡張子の判定
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -18,20 +16,14 @@ def index():
 @app.route('/top', methods=['GET', 'POST'])  # type: ignore
 def post():
     if request.method == 'POST':
-        # ファイル部分があるかの確認
-        if 'photo' not in request.files:
-            return redirect('/error')
-        img = request.files['photo']
-
-        # ファイルの拡張子が適切な場合にモデルに渡す
-        if img and allowed_file(img.filename):
-
-            return redirect('/result',result)
-        else:
-            flash('png、jpg、jpeg形式のファイルを選択してください')
-            return redirect(request.url)
+        enc_data  = request.form['img']
+        return redirect(url_for('test'))
     else:
         return render_template('top.html')
+
+@app.route("/test")
+def test():
+    return render_template('test.html')
 
 @app.route("/error")
 def error():
@@ -41,3 +33,15 @@ def error():
 def result():
     return render_template('result.html')
 
+###追加###
+import base64
+from PIL import Image
+from io import BytesIO
+@app.route("/img_post", methods=['POST'])
+def set_data():
+    enc_data  = request.form['img']
+    #dec_data = base64.b64decode( enc_data )              # これではエラー  下記対応↓
+    #dec_data = base64.b64decode( enc_data.split(',')[1] ) # 環境依存の様(","で区切って本体をdecode)
+    #dec_img  = Image.open(BytesIO(dec_data))
+    return render_template('test.html')
+###追加###

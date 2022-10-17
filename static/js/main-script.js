@@ -14,6 +14,32 @@ var controlCropper = document.querySelectorAll('.bottom-control .ctrl-cropper sv
 var lockCropper = document.querySelectorAll('.bottom-control .lock svg')
 var dargMode = document.querySelectorAll('.bottom-control .drag-mode svg')
 
+function send_img(img){
+    console.log("送信します")
+    var base64 = img;
+
+    var fData = new FormData();
+    fData.append('img', base64);
+
+    //ajax送信
+    $.ajax({
+        //画像処理サーバーに返す場合
+        url: 'http://127.0.0.1:5000/top',   
+        type: 'POST',
+        data: fData ,
+        contentType: false,
+        processData: false,
+        success: function(data, dataType) {
+            //非同期で通信成功時に読み出される [200 OK 時]
+            console.log('Success', data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            //非同期で通信失敗時に読み出される
+            console.log('Error : ' + errorThrown);
+        }
+    });
+}
+
 // shift control pages
 side_controls_shifter[0].onclick = () => {
     side_control_page_1.style.display = 'block'
@@ -101,9 +127,10 @@ hiddenUpload.onchange = () => {
                     var downloadUrl = window.URL.createObjectURL(blob)
                     var a = document.createElement('a')
                     a.href = downloadUrl
-                    a.download = 'cropped-image.jpg' // output image name
-                    a.click()
+                    a.download = 'cropped-image.png' // output image name
+                    img = a.click()
                     actionButton[1].innerText = 'Download'
+                    send_img(img)
                 })
             }
         }
