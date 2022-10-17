@@ -20,11 +20,22 @@ def index():
 @app.route('/top', methods=['GET', 'POST'])  # type: ignore
 def post():
     if request.method == 'POST':
+        print("ここまで実行されました1")
+        enc_data = request.form.get('blob')
+        print("ここまで実行されました2")
+        print(enc_data)
+        dec_data = base64.b64decode( enc_data ) # 環境依存の様(","で区切って本体をdecode)
+        print("ここまで実行されました3")
+        dec_img  = Image.open(BytesIO(dec_data))
+        print("ここまで実行されました4")
+        dec_img.save("test2.jpg")
+        """"
         enc_data  = request.form['img']
         dec_data = base64.b64decode( enc_data.split(',')[1] ) # 環境依存の様(","で区切って本体をdecode)
         #dec_data = base64.b64decode(enc_data)
         dec_img  = Image.open(BytesIO(dec_data))
         dec_img.save("test.png")
+        """
 
         """
         blob  = request.form['blob']

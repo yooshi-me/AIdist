@@ -15,11 +15,23 @@ var lockCropper = document.querySelectorAll('.bottom-control .lock svg')
 var dargMode = document.querySelectorAll('.bottom-control .drag-mode svg')
 
 function send_data(blob){
-    console.log("送信します")
-    var base64 = blob;
 
+
+
+
+
+
+
+
+
+
+
+
+    
+    /*
+    console.log("送信します")
     var fData = new FormData();
-    fData.append('blob', base64);
+    fData.append('blob', blob);
 
     //ajax送信
     $.ajax({
@@ -38,6 +50,7 @@ function send_data(blob){
             console.log('Error : ' + errorThrown);
         }
     });
+    */
 }
 
 // shift control pages
@@ -122,6 +135,7 @@ hiddenUpload.onchange = () => {
 
             // download cropped image
             actionButton[1].onclick = () => {
+                /*
                 //canvas elementを取得
                 var canvas = document.getElementById('canvas');
                 //base64データを取得（エンコード）
@@ -147,12 +161,14 @@ hiddenUpload.onchange = () => {
                         console.log('Error : ' + errorThrown);
                     }
                 });
-                /*actionButton[1].innerText = '...'
+                */
+                actionButton[1].innerText = '...'
                 cropper.getCroppedCanvas().toBlob((blob) => {
+                    console.log(blob)
                     var downloadUrl = window.URL.createObjectURL(blob)
                     actionButton[1].innerText = 'Download'
                     send_data(blob)
-                })*/
+                })
             }
         }
     }
