@@ -14,12 +14,12 @@ var controlCropper = document.querySelectorAll('.bottom-control .ctrl-cropper sv
 var lockCropper = document.querySelectorAll('.bottom-control .lock svg')
 var dargMode = document.querySelectorAll('.bottom-control .drag-mode svg')
 
-function send_img(img){
+function send_url(url_send){
     console.log("送信します")
-    var base64 = img;
+    var base64 = url_send;
 
     var fData = new FormData();
-    fData.append('img', base64);
+    fData.append('url_send', base64);
 
     //ajax送信
     $.ajax({
@@ -125,12 +125,8 @@ hiddenUpload.onchange = () => {
                 actionButton[1].innerText = '...'
                 cropper.getCroppedCanvas().toBlob((blob) => {
                     var downloadUrl = window.URL.createObjectURL(blob)
-                    var a = document.createElement('a')
-                    a.href = downloadUrl
-                    a.download = 'cropped-image.png' // output image name
-                    img = a.click()
                     actionButton[1].innerText = 'Download'
-                    send_img(img)
+                    send_url(downloadUrl)
                 })
             }
         }

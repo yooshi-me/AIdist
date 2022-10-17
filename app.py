@@ -1,6 +1,10 @@
 from flask import Flask
 from flask import Flask,flash
 from flask import render_template,request,redirect,url_for
+from PIL import Image
+import requests
+from io import BytesIO
+
 
 # ファイル拡張子の判定
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -16,8 +20,11 @@ def index():
 @app.route('/top', methods=['GET', 'POST'])  # type: ignore
 def post():
     if request.method == 'POST':
-        enc_data  = request.form['img']
-        return redirect(url_for('test'))
+        url  = request.form['url_send']
+        #response = requests.get(url)
+        img = Image.open(url)
+        img.save("test.png")
+        return redirect('/test')
     else:
         return render_template('top.html')
 
@@ -35,7 +42,6 @@ def result():
 
 ###追加###
 import base64
-from PIL import Image
 from io import BytesIO
 @app.route("/img_post", methods=['POST'])
 def set_data():
