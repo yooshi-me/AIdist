@@ -1,3 +1,4 @@
+from cProfile import label
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -11,6 +12,7 @@ import os
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import datetime
+import cv2
 
 
 class Net(nn.Module):
@@ -57,6 +59,18 @@ def make_figure():
 
     return acc_fig,loss_fig,acc_ax,loss_ax
 
+def check_inputs_data(inputs,labels):
+    for input,label in zip(inputs,labels):
+        img = input.to('cpu').detach().numpy().transpose(1, 2, 0)
+        plt.axis('off')
+        if label.item()==0:
+            label="generated"
+        else:
+            label="cifar-10"
+        plt.title(label)
+        plt.imshow(img)
+        plt.show()
+
 def train_loop(trainloader,optimizer,loss_fn,net,device,data_for_glaph):
     running_loss = 0
     all_loss = 0
@@ -64,6 +78,7 @@ def train_loop(trainloader,optimizer,loss_fn,net,device,data_for_glaph):
     for i, (inputs,labels) in enumerate(trainloader):
         correct = 0
         optimizer.zero_grad()
+        check_inputs_data(inputs,labels)
         inputs,labels = inputs.to(device),labels.to(device)
 
         outputs = net(inputs)
@@ -126,7 +141,7 @@ def google_drive_accese():
 def main():
     # ハイパーパラメータ
     epochs = 10
-    batch_size = 50
+    batch_size = 10
     lr = 1e-3
 
     # 出力用ディレクトリ準備
