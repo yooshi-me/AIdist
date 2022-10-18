@@ -27,6 +27,7 @@ for p in tqdm(paths_list):
     if np.array_equal(img,black_img_sample):
         black_img_list.append(p)
 
+new_paths_list_df = paths_list_df[~paths_list_df["path"].isin(black_img_list)]
 
-
-pd.Series(list(set(paths_list) - set(black_img_list))).to_csv(out_path)
+print(black_img_list)
+new_paths_list_df.to_csv(out_path, index = False)
