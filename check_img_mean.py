@@ -33,5 +33,11 @@ def check(paths_list,name):
     return mean_img
 
 
-check(cifar10_paths_list,"cifar10")
-check(generated_data_paths_list,"generated")
+#check(cifar10_paths_list,"cifar10")
+#check(generated_data_paths_list,"generated")
+
+sa = np.array(Image.open("./out/cifar10.png"),dtype=float).sum() - np.array(Image.open("./out/generated.png"),dtype=float).sum()
+print(sa/(32*32*3))
+
+
+#print(np.array(Image.open("data\generated_data/airplane/airplane exterior_00000.png"),dtype=float).transpose((2,0,1)).shape)
