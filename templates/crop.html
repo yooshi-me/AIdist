@@ -64,9 +64,10 @@
         </div>
 
         <div class="action-button">
-            <button class="upload">Upload</button>
+            <button class="upload" id="upload" onclick="set_visibility()">Upload</button>
             <input type="file" class="hidden-upload" style="display: none;" accept="image/*">
-            <button class="download">Download</button>
+            <button class="download" id="OK" onclick="set_visibility()">OK</button>
+            <button id="check" class="download hidden" hidden onclick="location.href='http://127.0.0.1:5000/result'">CHECK!</button>
         </div>
 
         <div class="bottom-control">
@@ -87,7 +88,7 @@
             </div>
         </div>
     </div>
-    <button onclick="location.href='http://127.0.0.1:5000/dist'">診断画面へ</button>
+    
 <script src="../static/js/cropper.js"></script>
 <script src="../static/js/main-script.js"></script>
 </body>

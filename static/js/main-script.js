@@ -13,45 +13,35 @@ var aspectRatio = document.querySelectorAll('.side-control-page-2 .aspect li')
 var controlCropper = document.querySelectorAll('.bottom-control .ctrl-cropper svg')
 var lockCropper = document.querySelectorAll('.bottom-control .lock svg')
 var dargMode = document.querySelectorAll('.bottom-control .drag-mode svg')
-var xhr = new XMLHttpRequest();
-function croppedImg(img_base64) {
-    const body = new FormData();
-    body.append('img', img_base64);
-    xhr.open('POST', 'http://127.0.0.1:5000/top', true);
-    xhr.onload = () => {
-        console.log(xhr.responseText)
-    };
-    xhr.send(body);
-}
+document.getElementById('OK').style.display = 'none'
+
+//データ送信関数
 function send_data(blob){
-
-     var reader = new FileReader();
-     reader.readAsDataURL(blob); 
-     reader.onloadend = function() {
-       var base64data = reader.result;                
-       console.log(base64data);
-       var fData = new FormData();
-       fData.append('img', base64data);
-     
-
-     //ajax送信
-     $.ajax({
-        //画像処理サーバーに返す場合
-        url: 'http://127.0.0.1:5000/top',   
-        type: 'POST',
-        data: fData,
-        contentType: false,
-        processData: false,
-        success: function(data, dataType) {
-            //非同期で通信成功時に読み出される [200 OK 時]
-            console.log('Success', data);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            //非同期で通信失敗時に読み出される
-            console.log('Error : ' + errorThrown);
-        }
-    });
-     }
+    var reader = new FileReader();
+    reader.readAsDataURL(blob); 
+    reader.onloadend = function() {
+        var base64data = reader.result;                
+        console.log(base64data);
+        var fData = new FormData();
+        fData.append('img', base64data);
+        //ajax送信
+        $.ajax({
+            //画像処理サーバーに返す場合
+            url: 'http://127.0.0.1:5000/crop',   
+            type: 'POST',
+            data: fData,
+            contentType: false,
+            processData: false,
+            success: function(data, dataType) {
+                //非同期で通信成功時に読み出される [200 OK 時]
+                console.log('Success', data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //非同期で通信失敗時に読み出される
+                console.log('Error : ' + errorThrown);
+            }
+        });
+    }
 }
 
 // shift control pages
@@ -69,7 +59,11 @@ side_controls_shifter[1].onclick = () => {
 }
 
 // upload image
-actionButton[0].onclick = () => hiddenUpload.click()
+actionButton[0].onclick = () => {
+    document.getElementById('OK').style.display = 'inline'
+    document.getElementById('check').style.display = 'none'
+    hiddenUpload.click()
+}
 hiddenUpload.onchange = () => {
     // apdate on new file selected issue removed here
     document.querySelector('.image-workspace').innerHTML = `<img src="" alt="">`
@@ -136,19 +130,11 @@ hiddenUpload.onchange = () => {
 
             // download cropped image
             actionButton[1].onclick = () => {
-                actionButton[1].innerText = '...'
+                actionButton[1].innerText = 'OK'
                 cropper.getCroppedCanvas().toBlob((blob) => {
-                    //croppedImg(blob);
-                    /*ダウンロードモジュール
-                    var downloadUrl = window.URL.createObjectURL(blob)
-                    var a = document.createElement('a')
-                    a.href = downloadUrl
-                    a.download = 'cropped-image.jpg' // output image name
-                    a.click()
-                    actionButton[1].innerText = 'Download'
-                    */
-
-
+                    document.getElementById('check').style.display = 'inline'
+                    // uploadボタン非表示
+                    document.getElementById('OK').style.display = 'none'
                     send_data(blob)
                 })
             }

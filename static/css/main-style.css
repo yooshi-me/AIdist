@@ -169,8 +169,8 @@ body{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
-.action-button .upload:active,
-.action-button .download:active{
+.action-button .upload,
+.action-button .download{
     border: 1px solid rgba(255, 255, 255, 0.4);
 }
 /* bottom control */
@@ -211,4 +211,8 @@ body{
 }
 .bottom-control li svg:active{
     border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.hidden {
+    display: none;
 }
