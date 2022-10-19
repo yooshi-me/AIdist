@@ -9,21 +9,33 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import PIL
 
-def get_loader(paths_list_path,batch_size):
+def get_loader(paths_list_path,batch_size,test_size=0.2,inference_flag=False):
     paths_dataframe = pd.read_csv(paths_list_path)
-
-    train_dir, test_dir, train_label, test_label = train_test_split(paths_dataframe["path"].to_list(),paths_dataframe["generated_flag"].to_list(),test_size=0.2,random_state=42,shuffle=True, stratify=paths_dataframe["generated_flag"].to_list())
 
     transform = transforms.Compose(
         [transforms.ToTensor(), # ToTensorによる変換でfloatになる
          transforms.Resize(32)]
     )
+
+    if inference_flag:
+        testdataset=CustomImageDataset(img_labels=paths_dataframe["generated_flag"].to_list(), img_dir=paths_dataframe["path"].to_list(),transform=transform,target_transform=None)
+        testloader = torch.utils.data.DataLoader(testdataset, batch_size=batch_size, shuffle=False)
+        return None, testloader
+
+
+
+    train_dir, test_dir, train_label, test_label = train_test_split(paths_dataframe["path"].to_list(),paths_dataframe["generated_flag"].to_list(),test_size=test_size,random_state=42,shuffle=True, stratify=paths_dataframe["generated_flag"].to_list())
+
     
+
     traindataset = CustomImageDataset(img_labels=train_label, img_dir=train_dir,transform=transform,target_transform=None)
     testdataset = CustomImageDataset(img_labels=test_label, img_dir=test_dir,transform=transform,target_transform=None)
+    
 
     trainloader = torch.utils.data.DataLoader(traindataset, batch_size=batch_size, shuffle=True)
     testloader = torch.utils.data.DataLoader(testdataset, batch_size=batch_size, shuffle=False)
+
+    
 
     return trainloader,testloader
 

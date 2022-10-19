@@ -1,13 +1,12 @@
-from cProfile import label
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 import torch.optim as optim
 import matplotlib.pyplot as plt
 import numpy as np
 from dataset import get_loader,CustomImageDataset
+from model import Net
 import os
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
@@ -15,37 +14,7 @@ import datetime
 import cv2
 
 
-class Net(nn.Module):
-    def __init__(self):
-        super(Net,self).__init__()
-        self.conv1 = nn.Conv2d(3,64,5,padding=2)
-        self.conv2 = nn.Conv2d(64,64,5,padding=2)
-        self.pool = nn.MaxPool2d(2,2)
-        self.conv3 = nn.Conv2d(64,128,3,padding=1)
-        self.conv4 = nn.Conv2d(128,128,3,padding=1)
-        self.conv5 = nn.Conv2d(128,256,3,padding=1)
-        self.conv6 = nn.Conv2d(256,256,3,padding=1)
-        self.fc1 = nn.Linear(4*4*256,4096)
-        self.fc2 = nn.Linear(4096,1)
-        self.sigmoid = nn.Sigmoid()
-        self.dropout = nn.Dropout(0.25)
-    
-    def forward(self,x):
-        x = F.relu(self.conv1(x))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = self.dropout(x)
-        x = F.relu(self.conv3(x))
-        x = self.pool(F.relu(self.conv4(x)))
-        x = self.dropout(x)
-        x = F.relu(self.conv5(x))
-        x = self.pool(F.relu(self.conv6(x)))
-        x = self.dropout(x)
-        x = x.view(-1,4*4*256)
-        x = F.relu(self.fc1(x))
-        x = self.fc2(x)
-        x = self.sigmoid(x)
 
-        return x
 
 def make_figure():
     acc_fig = plt.figure(figsize=(12,8))
@@ -78,7 +47,7 @@ def train_loop(trainloader,optimizer,loss_fn,net,device,data_for_glaph):
     for i, (inputs,labels) in enumerate(trainloader):
         correct = 0
         optimizer.zero_grad()
-        check_inputs_data(inputs,labels)
+        #check_inputs_data(inputs,labels)
         inputs,labels = inputs.to(device),labels.to(device)
 
         outputs = net(inputs)
@@ -143,10 +112,10 @@ def main():
     epochs = 10
     batch_size = 10
     lr = 1e-3
-
-    # 出力用ディレクトリ準備
     paths_list_path = "./data/pahts_list_mini.csv"
     out_path = "./out"
+
+    # 出力用ディレクトリ準備
     out_path = os.path.join(out_path,datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))
 
     #google_drive_accese()
