@@ -51,23 +51,35 @@ def top():
         #print(request.form.getlist('blob'))
         #print(request.form["blob"][0])
 
-        tmp = dict(request.form)
-        json_load = json.load(tmp)
-        print(json_load)
-        for mykey in tmp.keys():
+        #tmp = dict(request.form)
+        enc_data  = request.form
+        for mykey in enc_data.values():
             #print(mykey)
-            enc_data=bytes(mykey, 'utf-8')
-        img_np = np.array(enc_data)
-        img_np = img_np.astype(np.uint8)
-        print(img_np.dtype)
-        dec_data = img_np.tobytes()
+            enc_data_kai = mykey
+        #print(enc_data_kai)
+        dec_data = base64.b64decode( enc_data_kai.split(',')[1] )
+        dec_img  = Image.open(BytesIO(dec_data))
+        #print(enc_data[1])
+        #dec_data = base64.b64decode( enc_data.split(',')[1] ) # 環境依存の様(","で区切って本体をdecode)
+        #dec_img  = Image.open(BytesIO(dec_data))
+        #print(tmp)
+        #json_load = json.load(tmp)
+        #print(type(json_load))
+        #for mykey in tmp.keys():
+            #print(mykey)
+        #    enc_data=bytes(mykey, 'utf-8')
+        #img_np = np.array(enc_data)
+        #img_np = img_np.astype(np.uint8)
+        #print(img_np.dtype)
+        #dec_data = img_np.tobytes()
         #print(dec_data[:10])
         #plt.imshow(np.frombuffer(dec_data, dtype = np.uint8).reshape(img_np.shape))
         #plt.title("バイナリ->numpy array")
         #plt.show()
-        dataBytesIO = io.BytesIO(dec_data)
-        print(dataBytesIO.getvalue())
-        dec_img  = Image.open(dataBytesIO)
+        #print(dec_data)
+        #dataBytesIO = io.BytesIO(dec_data)
+        #print(dataBytesIO.getvalue())
+        #dec_img  = Image.open(dataBytesIO)
         dec_img.save("test222.png","PNG")
         return redirect('/test')
     else:
@@ -108,4 +120,3 @@ def dist():
             return render_template('result.html',result=result) # back to mypage
     else:
         return render_template('dist.html')
-

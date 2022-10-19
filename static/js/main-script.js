@@ -24,19 +24,23 @@ function croppedImg(img_base64) {
     xhr.send(body);
 }
 function send_data(blob){
-     //canvas elementを取得
-     console.log(blob)
-     var fData = new FormData();
-     fData.append('blob', blob);
-     console.log(fData);
+
+     var reader = new FileReader();
+     reader.readAsDataURL(blob); 
+     reader.onloadend = function() {
+       var base64data = reader.result;                
+       console.log(base64data);
+       var fData = new FormData();
+       fData.append('img', base64data);
+     
+
      //ajax送信
      $.ajax({
         //画像処理サーバーに返す場合
         url: 'http://127.0.0.1:5000/top',   
         type: 'POST',
-        data: blob,
-        dataType: 'binary',
-        responseType:'blob',
+        data: fData,
+        contentType: false,
         processData: false,
         success: function(data, dataType) {
             //非同期で通信成功時に読み出される [200 OK 時]
@@ -47,7 +51,7 @@ function send_data(blob){
             console.log('Error : ' + errorThrown);
         }
     });
-
+     }
 }
 
 // shift control pages
