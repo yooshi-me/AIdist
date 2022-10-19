@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
- <h1>結果表示画面</h1>
- <p>この画像はフェイク！</p>
- {% endblock %}
+<p>
+    <img src="{{ url_for('static', filename='img/crop-img.png') }}">
+</p>
+<p>フェイクの可能性：{{ result }}％</p>
+{% endblock %}
