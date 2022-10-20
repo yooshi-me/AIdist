@@ -7,7 +7,6 @@ from inference import output_result
 from model import Net
 
 
-
 #AIのモデル関数
 def model():
     output = output_result('./static/img/predict_img.png')
@@ -45,6 +44,6 @@ def error():
 def result():
     #img = Image.open("./static/img/predict_img.png")
     #result = model(img)
-    #result = model_temp()
-    result = model()
+    result = model_temp()
+    #result = model()
     return render_template('result.html',result=result)

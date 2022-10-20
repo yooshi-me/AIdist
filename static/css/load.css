@@ -13,8 +13,8 @@
 #loader {
     width: 100%;
     height: 100vh;
-    background-color: #8149b3;
-}
+    background: linear-gradient(-135deg, #6a30dd, #c763e3) fixed;
+  }
 
 #loader.loaded {
     animation: fadeOut 3s forwards;

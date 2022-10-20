@@ -14,6 +14,7 @@ var controlCropper = document.querySelectorAll('.bottom-control .ctrl-cropper sv
 var lockCropper = document.querySelectorAll('.bottom-control .lock svg')
 var dargMode = document.querySelectorAll('.bottom-control .drag-mode svg')
 document.getElementById('OK').style.display = 'none'
+document.getElementById('check').style.display = 'none'
 
 //データ送信関数
 function send_data(blob){

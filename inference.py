@@ -27,23 +27,14 @@ def inferance(pre_image):
         output = net(pre_image) # chage to cpu
         output = torch.flatten(output)
         prediction = torch.where(output<0.5,0,1)
-    print('------------------------------------------------')
-    # softmax = nn.Softmax(dim=1)
-    # outputs = softmax(outputs)
     label = classes[prediction.item()]
     return output, label
 
 def output_result(path):
     """"前処理と推論の実行 """
-    # print('------------------------------------------------')
-    # print(image.format, image.size, image.mode)
-    # print(image)
-    # print(type(image))
-    # print('------------------------------------------------')
     pre_image = processing(path)
     output, label = inferance(pre_image)
     return output 
     
 if __name__ == "__main__":
     outputs = output_result('./static/img/predict_img.png')
-    print(outputs)
