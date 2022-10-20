@@ -10,7 +10,6 @@ from model import Net
 #AIのモデル関数
 def model():
     output = output_result('./static/img/predict_img.png')
-    #print(outputs[0][0].item(), outputs[0][1].item())
     ai_gererate_prob = output.item()
     return ai_gererate_prob
 
@@ -42,8 +41,7 @@ def error():
 
 @app.route("/result")
 def result():
-    #img = Image.open("./static/img/predict_img.png")
-    #result = model(img)
-    result = model_temp()
-    #result = model()
+    result = model()
+    result = round(result, 2) # 少数第二位まで表示
+    # result = model_tmp()
     return render_template('result.html',result=result)
