@@ -61,8 +61,8 @@ side_controls_shifter[1].onclick = () => {
 
 // upload image
 actionButton[0].onclick = () => {
-    document.getElementById('OK').style.display = 'inline'
-    document.getElementById('check').style.display = 'none'
+    //document.getElementById('OK').style.display = 'inline'
+    //document.getElementById('check').style.display = 'none'
     hiddenUpload.click()
 }
 hiddenUpload.onchange = () => {
@@ -71,6 +71,11 @@ hiddenUpload.onchange = () => {
     var image_workspace = document.querySelector('.image-workspace img')
     
     var file = hiddenUpload.files[0]
+    if (file){
+        document.getElementById('OK').style.display = 'inline'
+        document.getElementById('check').style.display = 'none'
+    }
+
     var url = window.URL.createObjectURL(new Blob([file], { type : 'image/jpg' }))
     image_workspace.src = url
     image_workspaceSpan.style.display = 'none'
