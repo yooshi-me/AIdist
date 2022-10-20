@@ -14,7 +14,7 @@ def get_loader(paths_list_path,batch_size,test_size=0.2,inference_flag=False):
 
     transform = transforms.Compose(
         [transforms.ToTensor(), # ToTensorによる変換でfloatになる
-         transforms.Resize(32)]
+         transforms.Resize(178)]
     )
 
     if inference_flag:

@@ -15,7 +15,7 @@ out_path = "./data/pahts_list_without_black_img.csv"
 
 paths_list_df = pd.read_csv(paths_list_path)
 
-black_img_sample_path = "data\generated_data\horse\horse_00173.png" # 真っ黒画像の一例
+black_img_sample_path = "data/face/genarated_data/woman_00211.png" # 真っ黒画像の一例
 black_img_sample = np.array(Image.open(black_img_sample_path))
 
 black_img_list = []

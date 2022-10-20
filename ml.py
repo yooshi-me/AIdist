@@ -72,7 +72,7 @@ def train_loop(trainloader,optimizer,loss_fn,net,device,data_for_glaph):
     correct *= 100
     
     data_for_glaph["train"].append([correct,all_loss])
-    print(f"Accuracy: {correct:>5f}% loss:{all_loss:>5f}")
+    print(f"Train Accuracy: {correct:>5f}% loss:{all_loss:>5f}")
 
     return data_for_glaph
 
@@ -95,7 +95,7 @@ def test_loop(testloader,loss_fn,net,device,data_for_glaph):
         correct /= test_size
         correct *= 100
         data_for_glaph["test"].append([correct,all_loss])
-        print(f"Accuracy: {correct:>5f}% loss:{all_loss:>5f}")
+        print(f"Test Accuracy: {correct:>5f}% loss:{all_loss:>5f}")
     
     return data_for_glaph
 
@@ -112,7 +112,7 @@ def main():
     epochs = 10
     batch_size = 10
     lr = 1e-3
-    paths_list_path = "./data/pahts_list_mini.csv"
+    paths_list_path = "./data/pahts_list_without_black_img.csv"
     out_path = "./out"
 
     # 出力用ディレクトリ準備
@@ -156,7 +156,8 @@ def main():
     
     # 結果出力、保存
     os.mkdir(out_path)
-    torch.save(net, os.path.join(out_path, 'model_weight.pth'))
+    torch.save(net, os.path.join(out_path, 'model.pth'))
+    torch.save(net.state_dict(), os.path.join(out_path, 'weight.pth'))
     acc_fig.legend(bbox_to_anchor=(1, 1), loc='upper right', borderaxespad=0)
     acc_fig.savefig(os.path.join(out_path,"accuracy_figure"))
     loss_fig.legend(bbox_to_anchor=(1, 1), loc='upper right', borderaxespad=0)    
