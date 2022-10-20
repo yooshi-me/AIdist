@@ -4,7 +4,7 @@
     height: 1024px; /* 画像の高さ */
     background-image: url('./img/top_img.jpg');
     background-repeat: repeat-x;
-    background-size: auto 1024px; /* 画像の高さ */
+    background-size: auto; /* 画像の高さ */
     animation: loop 30s linear infinite;
   }
   @keyframes loop {
@@ -12,6 +12,6 @@
         background-position: 0 0;
     }
     to {
-        background-position: -2000px 0; /* 画像のマイナス幅 */
+        background-position: -1000px 0; /* 画像のマイナス幅 */
     }
   }
