@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='css/load.css')}}">
     <script src="{{url_for('static', filename='js/load.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" type="text/javascript"></script>
 </head>
 <body>
     <div id="loader">
@@ -19,9 +20,42 @@
           <div class="cube2"></div>
         </div>
     </div>
-    <p>
-        <img src="{{ url_for('static', filename='img/predict_img.png') }}">
-    </p>
-    <p>フェイクの可能性：{{ result }}％</p>
+    <div clss="container">
+        <div class="text-center">
+            <img 
+            src="{{ url_for('static', filename='img/predict_img.png') }}"
+            class="img-fluid img-thumbnail"
+            alt="Youser's image"
+            style = "border: 4px solid #002ed6"
+            >
+        </div>
+        <canvas id="graph-area" height="450" width="600"></canvas>
+        <script type="text/javascript">
+
+            // ▼グラフの中身
+            var pieData = [
+               {
+                  value: {{ result }},            // 値
+                  color:"#F7464A",       // 色
+                  highlight: "#FF5A5E",  // マウスが載った際の色
+                  label: "AIが生成した画像"        // ラベル
+               },
+               {
+                  value: 100-{{ result }},
+                  color: "#41C44E",
+                  highlight: "#6CD173",
+                  label: "写真"
+               },
+            ];
+         
+            // ▼上記のグラフを描画するための記述
+            window.onload = function(){
+                var ctx = document.getElementById("graph-area").getContext("2d");
+                window.myPie = new Chart(ctx).Pie(pieData);
+            };
+         
+         </script>
+        <p class="text-center">フェイクの可能性：{{ result }}％</p>
+    </div>
 </body>
 </html>
