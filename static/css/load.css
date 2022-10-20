@@ -11,9 +11,13 @@
 }
 
 #loader {
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(-135deg, #6a30dd, #c763e3) fixed;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(-135deg, #6a30dd, #c763e3) fixed;
+  }
+
+#unloader {
+  display: none;
   }
 
 #loader.loaded {

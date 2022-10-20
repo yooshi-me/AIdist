@@ -21,67 +21,69 @@
           <div class="cube2"></div>
         </div>
     </div>
-    <div clss="container">
-        <!--画像の表示-->
-        <div class="text-center">
-            <img 
-            src="{{ url_for('static', filename='img/predict_img.png') }}"
-            class="img-fluid"
-            alt="Youser's image"
-            style = "border: 6px solid #002ed6"
-            >
-        </div>
-        <!--結果と円グラフの表示(chart.js)-->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <canvas id="doughnut-chart" height="400" width="500"></canvas>
+    <div id="unloader">
+        <div clss="container">
+            <!--画像の表示-->
+            <div class="text-center">
+                <img 
+                src="{{ url_for('static', filename='img/predict_img.png') }}"
+                class="img-fluid"
+                alt="Youser's image"
+                style = "border: 6px solid #002ed6"
+                >
+            </div>
+            <!--結果と円グラフの表示(chart.js)-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <canvas id="doughnut-chart" height="400" width="500"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        <script>
-            const data = {
-                labels: [
-                    'AIの生成画像',
-                    '写真'
-                ],
-                datasets: [{
-                    label: 'Inference score',
-                    data: [{{ result }}, {{ 100.0 - result }}],
-                    backgroundColor: [
-                    'rgb(143, 0, 255)',
-                    'rgb(0, 133, 255)'
+            <script>
+                const data = {
+                    labels: [
+                        'AIの生成画像',
+                        '写真'
                     ],
-                    hoverOffset: 5
-                }]
-                };
+                    datasets: [{
+                        label: 'Inference score',
+                        data: [{{ result }}, {{ 100.0 - result }}],
+                        backgroundColor: [
+                        'rgb(143, 0, 255)',
+                        'rgb(0, 133, 255)'
+                        ],
+                        hoverOffset: 5
+                    }]
+                    };
 
-                const config = {
-                    type: 'doughnut',
-                    data: data,
-                    options: { 
-                        responsive: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    boxWidth: 40,
-                                    font: {
-                                        size: 18,
+                    const config = {
+                        type: 'doughnut',
+                        data: data,
+                        options: { 
+                            responsive: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 40,
+                                        font: {
+                                            size: 18,
+                                        }
                                     }
-                                }
-                            },
+                                },
+                            }
                         }
-                    }
-                };
-        </script>
-        <script>
-            const myChart = new Chart(
-                document.getElementById('doughnut-chart'),
-                config
-            );
-        </script>
-        <p class="text-center">フェイクの可能性：{{ result }}％</p>
+                    };
+            </script>
+            <script>
+                const myChart = new Chart(
+                    document.getElementById('doughnut-chart'),
+                    config
+                );
+            </script>
+            <p class="text-center">フェイクの可能性：{{ result }}％</p>
+        </div>
     </div>
 </body>
 </html>
