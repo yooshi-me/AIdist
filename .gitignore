@@ -1,5 +1,4 @@
-data
 .env
-
 out
-__pycache__
+__pycache__/
+saved_model/

@@ -4,15 +4,15 @@ from PIL import Image
 from io import BytesIO
 import base64
 from inference import output_result
-from ml_model import Net
+from model import Net
 
 
 
 #AIのモデル関数
 def model():
-    outputs = output_result('./static/img/predict_img.png')
+    output = output_result('./static/img/predict_img.png')
     #print(outputs[0][0].item(), outputs[0][1].item())
-    ai_gererate_prob = outputs[0][0].item()
+    ai_gererate_prob = output.item()
     return ai_gererate_prob
 
 def model_temp():

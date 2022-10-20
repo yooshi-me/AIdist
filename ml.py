@@ -13,9 +13,6 @@ from pydrive.drive import GoogleDrive
 import datetime
 import cv2
 
-
-
-
 def make_figure():
     acc_fig = plt.figure(figsize=(12,8))
     plt.rcParams["font.size"] = 25
