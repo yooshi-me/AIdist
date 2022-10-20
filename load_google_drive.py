@@ -23,7 +23,8 @@ def main():
                 print('Download {} to {}'.format(f['title'], dst_path))
 
     # download_file_recursively( 'data', '/data')
-    file_id = drive.ListFile({'q': 'data'}).GetList()[0]['id']
-    print(file_id)
+    folder_id = drive.ListFile({'q': "title = 'data'"}).GetList()[0]['id']
+    download_file_recursively( folder_id, 'data')
+
 if __name__ == '__main__':
     main()
