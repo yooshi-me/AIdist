@@ -1,8 +1,10 @@
-import torch
-import torchvision
-import torch.nn as nn 
-from torchvision import transforms
-import torch.nn.functional as F
+#エラー対策でコメントアウト
+"""""
+#import torch
+#import torchvision
+#import torch.nn as nn 
+#from torchvision import transforms
+#import torch.nn.functional as F
 
 class Net(nn.Module):
 
@@ -31,3 +33,4 @@ class Net(nn.Module):
 
 if __name__ == "__main__":
     print('ml')
+"""

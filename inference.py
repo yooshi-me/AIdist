@@ -1,3 +1,4 @@
+"""""
 import torch
 import torchvision
 import torch.nn as nn 
@@ -31,9 +32,10 @@ class Net(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
+"""
 
+"""""
 def processing(image):
-    """"画像の前処理"""
     transform = transforms.Compose(
             [transforms.ToTensor(),
             transforms.Resize(32)]
@@ -43,7 +45,6 @@ def processing(image):
     return image_batch
 
 def inferance(pre_image):
-    """"画像を読み込んで推論する"""
     classes = ('AI_generate', 'photo')
     print('ここまでok1')
     net = Net()
@@ -76,3 +77,4 @@ def output_result(path):
     
 if __name__ == "__main__":
     output_result('./static/img/predict_img.png')
+"""
