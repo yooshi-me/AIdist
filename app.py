@@ -1,8 +1,12 @@
+import imp
 from flask import Flask,render_template,request
 from PIL import Image
 from io import BytesIO
 import base64
 from inference import output_result
+from ml_model import Net
+
+
 
 #AIのモデル関数
 def model():
