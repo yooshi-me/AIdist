@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en ja">
 
 <head>
   <title>AIdist</title>
@@ -15,6 +15,7 @@
   <!-- Material Kit CSS -->
   <link href="../static/css/material-kit.css?v=3.0.0" rel="stylesheet" />
   <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+  <script src="{{url_for('static', filename='js/index.js')}}"></script>
   <style>
     #button {
       border: none;
@@ -28,9 +29,41 @@
   <!-- Navbar Transparent -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent">
     <div class="container">
-      <a class="navbar-brand  text-white " href="https://demos.creative-tim.com/material-kit/presentation" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
-        Material Kit 2
-      </a>
+      <!--
+      <div id="langChenge">
+        <input type="radio" name="land" id="langJa">
+        <input type="radio" name="land" id="langEn" checked>
+       
+        <label for="langJa">
+          <span lang="ja">日本語</span>
+          <span lang="en">Japanese</span>
+        </label>
+        <label for="langEn">
+          <span lang="ja">英語</span>
+          <span lang="en">English</span>
+        </label>
+        <div>
+          <p lang="ja">言語の切り替えはCSSのセレクタを使用します。</p>
+          <p lang="en">Language switching uses CSS selector.</p>
+          <p lang="ja">サンプルは日本語と英語の切り替えを行っています。</p>
+          <p lang="en">The sample is switching between Japanese and English.</p>
+        </div>
+      </div>
+       --> 
+       <div id="sample1">
+        <input type="radio" name="langKbn" id="sJa" onClick="langSet('ja')" checked>
+        <label for="sJa">
+          <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="ja">Japanese</span>
+          <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="en"> 日本語 </span>
+        </label>
+       
+        <input type="radio" name="langKbn" id="sEn" onClick="langSet('en')">
+        <label for="sEn">
+          <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="ja">English</span>
+          <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="en">英語</span>
+        </label>
+      </div>
+
       <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon mt-2">
           <span class="navbar-toggler-bar bar1"></span>
@@ -38,6 +71,7 @@
           <span class="navbar-toggler-bar bar3"></span>
         </span>
       </button>
+      <!--
       <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-12 ps-lg-5" id="navigation">
         <ul class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
@@ -66,10 +100,9 @@
               <img src="./../static/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-none d-block">
             </a>
           </li>
-          <li class="nav-item ms-lg-auto my-auto ms-3 ms-lg-0 mt-2 mt-lg-0">
-            <a href="https://www.creative-tim.com/product/material-kit" class="btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0">Free Download</a></li>
         </ul>
       </div>
+      -->
     </div>
   </nav>
   </div>>
@@ -81,21 +114,25 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto">
-          <div class="text-center">
-            <h1 class="text-white">Welcome to AIdist</h1>
-            <h3 class="text-white">Can you trust the news?</h3>
-          </div>
+            <div class="langChenge text-center">
+              <h1 lang="en" class="text-white langCng">Welcome to AIdist</h1>
+              <h1 lang="ja" class="text-white langCng">AIdist へようこそ</h1>
+              <h3 lang="en" class="text-white langCng">Can you trust the news?</h3>
+              <h3 lang="ja" class="text-white langCng">そのニュース信頼できますか?</h3>
+            </div>
         </div>
       </div>
     </div>
   </div>
   <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
     <div class="container">
-      <div class="section text-center">
-        <h2><a id="button" href="/crop" class="title">Find out with this app!</a><h2>
+      <div class="langChenge section text-center">
+        <h2><a lang="en" id="button" class="langCng" href="/crop" class="title">Find out with this app!</a><h2>
+        <h2><a lang="ja" id="button" class="langCng" href="/crop" class="title">その画像を診断してみよう！</a><h2></h2>
       </div>
     </div>
   </div>
+  <!--
   <footer class="footer pt-5 mt-5">
     <div class="container">
       <div class=" row">
@@ -246,6 +283,7 @@
       </div>
     </div>
   </footer>
+  -->
 </body>
 
 </html>
