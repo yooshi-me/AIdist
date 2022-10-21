@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Result</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/stylesheet.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/responsive.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/load.css')}}">
+    <script src="{{url_for('static', filename='js/load.js')}}"></script>
+    <!--Chart.js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<div>
+    <div id="loader">
+        <div class="spinner">
+          <div class="cube1"></div>
+          <div class="cube2"></div>
+        </div>
+    </div>
+    <div id="unloader">
+        <div class="container-fluid">
+                <div class="text-center">
+                    <!--タイトルの表示-->
+                    <h1 class="display-1">Aidist</h1>
+                    <p class="lead">
+                        Make sure your image is AI-generated.
+                    </p>
+            </div>
+        </div>
+        <div class="container-sm">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                <!--画像の表示-->
+                    <div class="card shadow-lg">
+                        <img 
+                        src="{{ url_for('static', filename='img/predict_img.png') }}" 
+                        class="card-img-top round"
+                        alt="Youser's image" 
+                        >
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <!--AI生成円グラフの表示(chart.js)-->
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h5 class="card-title">AI-generated</h5>
+                                <h2 class="card-title">{{ result * 100.0 }}%</h2>
+                            </div>
+                            <canvas id="doughnut-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!--画像の表示-->
+                    <div class="card shadow-lg">
+                        <img src="{{ url_for('static', filename='img/grad-cam_img.png') }}" class="card-img-top round" alt="Youser's image">
+                    </div>
+                </div>
+            </div>
+            <!--円グラフの描画設定(chart.js)-->
+            <script>
+                const data = {
+                    labels: [
+                        'AIの生成画像',
+                        '写真'
+                    ],
+                    datasets: [{
+                        label: 'Inference score',
+                        data: [{{ result*100.0 }}, {{ 100.0 - result*100.0 }}],
+                        backgroundColor: [
+                        'rgb(143, 0, 255, 0.8)',
+                        'rgb(0, 133, 255, 0.8)'
+                        ],
+                        hoverOffset: 3,
+                    }]
+                };
+                const config = {
+                    type: 'doughnut',
+                    data: data,
+                    options: { 
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false,
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 40,
+                                    font: {
+                                        size: 18,
+                                    }
+                                },
+                            }
+                        }
+                    }
+                };
+            </script>
+                <script>
+                    const myChart = new Chart(
+                        document.getElementById('doughnut-chart'),
+                        config
+                    );
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

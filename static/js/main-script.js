@@ -61,8 +61,6 @@ side_controls_shifter[1].onclick = () => {
 
 // upload image
 actionButton[0].onclick = () => {
-    document.getElementById('OK').style.display = 'inline'
-    document.getElementById('check').style.display = 'none'
     hiddenUpload.click()
 }
 hiddenUpload.onchange = () => {
@@ -71,6 +69,25 @@ hiddenUpload.onchange = () => {
     var image_workspace = document.querySelector('.image-workspace img')
     
     var file = hiddenUpload.files[0]
+
+    // ファイル形式のエラー時のプッシュ通知
+    console.log(file.type);
+    if(file.type == "image/png"){
+        console.log('File extension is PNG. OK.')
+        //Push.create('PNG');
+    }else if(file.type == "image/jpeg"){
+        console.log('File extension is JPEG. OK.')
+        //Push.create('JPEG');
+    }else{
+        console.log('File extension is problem. Please Change PNG or JPEG.')
+        Push.create('File extension is problem. Please Change PNG or JPEG.');
+    }
+
+    if (file){
+        document.getElementById('OK').style.display = 'inline'
+        document.getElementById('check').style.display = 'none'
+    }
+
     var url = window.URL.createObjectURL(new Blob([file], { type : 'image/jpg' }))
     image_workspace.src = url
     image_workspaceSpan.style.display = 'none'

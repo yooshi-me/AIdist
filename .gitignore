@@ -2,3 +2,6 @@
 out
 __pycache__/
 saved_model/
+data
+static/img/predict_img.png
+static/img/grad-cam_img.png
