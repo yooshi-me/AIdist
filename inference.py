@@ -8,6 +8,8 @@ from model import Net
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import glob
+import os
 
 def processing(path):
     """"画像の前処理"""
@@ -37,15 +39,16 @@ def output_result(path,gradcam_flag=False):
     """"前処理と推論の実行 """
     pre_image = processing(path)
     if gradcam_flag:
-        output, label = gradcam(path)
+        output, label, superimposed_img = gradcam(path)
     else:
         output, label = inferance(pre_image)
-    return output 
+        superimposed_img = None
+    return output, superimposed_img
 
 
 def gradcam(img_path):
     classes = ('photo', 'AI_generate')
-    net = torch.load('./saved_model/model.pth', map_location=torch.device('cpu')) ###
+    net = torch.load('./out/2022-10-21-18-08-40/model.pth', map_location=torch.device('cpu')) ###
     net.eval()
 
     def __extract(grad):
@@ -116,12 +119,18 @@ def gradcam(img_path):
     superimposed_img = heatmap * 0.4 + img
     superimposed_img = np.uint8(255 * superimposed_img / np.max(superimposed_img))
     superimposed_img = cv2.cvtColor(superimposed_img, cv2.COLOR_BGR2RGB)
-    plt.title(str(label)+","+str(output.item()))
-    plt.imshow(superimposed_img)
-    plt.show()
 
-    return output,label
+    return output,label,superimposed_img
     
 if __name__ == "__main__":
-    output = output_result('./static/img/team-5.jpg',gradcam_flag=True)
-    print(output)
+    paths_gen = glob.glob("data/test_data_2/generated_data/*png")
+    paths_real = glob.glob("data/test_data_2/real_data/*jpg")
+
+    paths = paths_gen + paths_real
+
+    for p in paths:
+        output,img = output_result(p, gradcam_flag=True)
+        basename = os.path.basename(p).split(".")[0]
+        name = "inf_" + basename +"_"+ str(output.item()).split(".")[1][:4] + ".png"
+        img = Image.fromarray(img)
+        img.save("./out/tmp3/"+name)
