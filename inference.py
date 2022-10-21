@@ -43,7 +43,7 @@ def output_result(path,gradcam_flag=False):
     else:
         output, label = inferance(pre_image)
         superimposed_img = None
-    return output, superimposed_img
+    return output
 
 
 def gradcam(img_path):

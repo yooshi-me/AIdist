@@ -9,10 +9,10 @@ from model import Net
 
 #AIのモデル関数
 def model():
-    output, superimposed_img = output_result('./static/img/predict_img.png',gradcam_flag=False)
+    output= output_result('./static/img/predict_img.png',gradcam_flag=False)
     #print(outputs[0][0].item(), outputs[0][1].item())
     ai_gererate_prob = output.item()
-    return ai_gererate_prob, superimposed_img
+    return ai_gererate_prob
 
 def model_temp():
     return 50
