@@ -1,0 +1,36 @@
+.langChenge input[type="radio"]{
+    display    : none;
+    }
+    
+    /* === 各ラジオボタンのラベルをボタンに変更 == */
+    .langChenge label{
+    display    : inline-block;
+    }
+    
+    
+    /*genngosettei*/
+    #sample1 input[type="radio"]{
+    display    : none;
+    }
+    
+    /* === 各ラジオボタンのラベルをボタンに変更 == */
+    #sample1 label{
+    display    : inline-block;
+    width: 20%;
+    min-width: 200px;
+    max-width: 600px;
+    padding: 10px;
+    left:10%;
+    }
+    #sample1{
+    width: 20%;
+    min-width: 200px;
+    max-width: 600px;
+    padding: 10px;
+    left:800%;
+    }
+    
+    /* === 選択されている言語のラベル色を変更 ==== */
+    #sample1 input[type="radio"]:checked + label {
+    display: none;
+    }

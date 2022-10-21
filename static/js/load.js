@@ -2,8 +2,9 @@ window.onload = ()=>{
     console.log('ローど開始')
     sleep(5, function () {
         console.log('5秒経過しました！')
-        const loader = document.getElementById('loader');
-        loader.classList.add('loaded');
+        document.getElementById('loader').remove();
+        document.getElementById('unloader').style.display='inline';
+        document.getElementById('unloader ').style.visibility='visible'
     });
 }
 

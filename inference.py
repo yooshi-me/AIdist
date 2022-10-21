@@ -48,7 +48,7 @@ def output_result(path,gradcam_flag=False):
 
 def gradcam(img_path):
     classes = ('photo', 'AI_generate')
-    net = torch.load('./out/2022-10-21-18-08-40/model.pth', map_location=torch.device('cpu')) ###
+    net = torch.load('./saved_model/model.pth', map_location=torch.device('cpu')) ###
     net.eval()
 
     def __extract(grad):

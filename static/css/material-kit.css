@@ -10546,6 +10546,7 @@ fieldset:disabled .btn {
 
 .text-white {
   color: #fff !important;
+  position: center;
 }
 
 .text-body {
@@ -27636,6 +27637,27 @@ pre[class*="language-"] {
 (-ms-high-contrast: none) {
   .ps {
     overflow: auto !important;
+  }
+}
+
+
+
+
+/*slide*/
+.slide {
+  width: 100%;
+  height: 810px; /* 画像の高さ */
+  background-image: url('./img/top_img.jpg');
+  background-repeat: repeat-x;
+  background-size: 2300px; /* 画像の高さ */
+  animation: loop 30s linear infinite;
+}
+@keyframes loop {
+  from {
+      background-position: 0 0;
+  }
+  to {
+      background-position: -1000px 0; /* 画像のマイナス幅 */
   }
 }
 

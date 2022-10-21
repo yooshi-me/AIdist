@@ -14,65 +14,65 @@
     <!--Chart.js-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<div>
     <div id="loader">
         <div class="spinner">
           <div class="cube1"></div>
           <div class="cube2"></div>
         </div>
     </div>
-    <div class="container-fluid">
-            <div class="text-center">
-                <!--タイトルの表示-->
-                <h1 class="display-1">Aidist</h1>
-                <p class="lead">
-                    Make sure your image is AI-generated.
-                </p>
-        </div>
-    </div>
-    <div class="container-sm">
-        <div class="row">
-            <div class="col-md-6 mb-4">
-            <!--画像の表示-->
-                <div class="card shadow-lg">
-                    <img 
-                    src="{{ url_for('static', filename='img/predict_img.png') }}" 
-                    class="card-img-top round"
-                    alt="Youser's image" 
-                    >
-                </div>
+    <div id="unloader">
+        <div class="container-fluid">
+                <div class="text-center">
+                    <!--タイトルの表示-->
+                    <h1 class="display-1">Aidist</h1>
+                    <p class="lead">
+                        Make sure your image is AI-generated.
+                    </p>
             </div>
-            <div class="col-md-4 ">
-                <!--AI生成円グラフの表示(chart.js)-->
-                <div class="card shadow-lg">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <h5 class="card-title">AI-generated</h5>
-                            <h2 class="card-title">{{ result }}%</h2>
+        </div>
+        <div class="container-sm">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                <!--画像の表示-->
+                    <div class="card shadow-lg">
+                        <img 
+                        src="{{ url_for('static', filename='img/predict_img.png') }}" 
+                        class="card-img-top round"
+                        alt="Youser's image" 
+                        >
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <!--AI生成円グラフの表示(chart.js)-->
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h5 class="card-title">AI-generated</h5>
+                                <h2 class="card-title">{{ result }}%</h2>
+                            </div>
+                            <canvas id="doughnut-chart"></canvas>
                         </div>
-                        <canvas id="doughnut-chart"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--円グラフの描画設定(chart.js)-->
-        <script>
-            const data = {
-                labels: [
-                    'AIの生成画像',
-                    '写真'
-                ],
-                datasets: [{
-                    label: 'Inference score',
-                    data: [{{ result }}, {{ 100.0 - result }}],
-                    backgroundColor: [
-                    'rgb(143, 0, 255, 0.8)',
-                    'rgb(0, 133, 255, 0.8)'
+            <!--円グラフの描画設定(chart.js)-->
+            <script>
+                const data = {
+                    labels: [
+                        'AIの生成画像',
+                        '写真'
                     ],
-                    hoverOffset: 3
-                }]
+                    datasets: [{
+                        label: 'Inference score',
+                        data: [{{ result }}, {{ 100.0 - result }}],
+                        backgroundColor: [
+                        'rgb(143, 0, 255, 0.8)',
+                        'rgb(0, 133, 255, 0.8)'
+                        ],
+                        hoverOffset: 3,
+                    }]
                 };
-
                 const config = {
                     type: 'doughnut',
                     data: data,
@@ -87,19 +87,21 @@
                                     font: {
                                         size: 18,
                                     }
-                                }
-                            },
+                                },
+                            }
                         }
                     }
                 };
-        </script>
-        <script>
-            const myChart = new Chart(
-                document.getElementById('doughnut-chart'),
-                config
-            );
-        </script>
-        <p class="text-center">フェイクの可能性：{{ result }}％</p>
+            </script>
+                <script>
+                    const myChart = new Chart(
+                        document.getElementById('doughnut-chart'),
+                        config
+                    );
+                </script>
+                <p class="text-center">フェイクの可能性：{{ result }}％</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
