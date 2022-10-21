@@ -49,10 +49,16 @@
                         <div class="card-body">
                             <div class="text-center">
                                 <h5 class="card-title">AI-generated</h5>
-                                <h2 class="card-title">{{ result }}%</h2>
+                                <h2 class="card-title">{{ result * 100.0 }}%</h2>
                             </div>
                             <canvas id="doughnut-chart"></canvas>
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!--画像の表示-->
+                    <div class="card shadow-lg">
+                        <img src="{{ url_for('static', filename='img/grad-cam_img.png') }}" class="card-img-top round" alt="Youser's image">
                     </div>
                 </div>
             </div>
@@ -65,7 +71,7 @@
                     ],
                     datasets: [{
                         label: 'Inference score',
-                        data: [{{ result }}, {{ 100.0 - result }}],
+                        data: [{{ result*100.0 }}, {{ 100.0 - result*100.0 }}],
                         backgroundColor: [
                         'rgb(143, 0, 255, 0.8)',
                         'rgb(0, 133, 255, 0.8)'
@@ -99,7 +105,6 @@
                         config
                     );
                 </script>
-                <p class="text-center">フェイクの可能性：{{ result }}％</p>
             </div>
         </div>
     </div>

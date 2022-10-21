@@ -10,6 +10,8 @@ import cv2
 import matplotlib.pyplot as plt
 import glob
 import os
+from PIL import ImageFile 
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def processing(path):
     """"画像の前処理"""
@@ -39,10 +41,9 @@ def output_result(path,gradcam_flag=False):
     """"前処理と推論の実行 """
     pre_image = processing(path)
     if gradcam_flag:
-        output, label, superimposed_img = gradcam(path)
+        output, label  = gradcam(path)
     else:
         output, label = inferance(pre_image)
-        superimposed_img = None
     return output
 
 
@@ -120,7 +121,9 @@ def gradcam(img_path):
     superimposed_img = np.uint8(255 * superimposed_img / np.max(superimposed_img))
     superimposed_img = cv2.cvtColor(superimposed_img, cv2.COLOR_BGR2RGB)
 
-    return output,label,superimposed_img
+    Image.fromarray(superimposed_img).save("./static/img/grad-cam_img.png")
+
+    return output,label
     
 if __name__ == "__main__":
     paths_gen = glob.glob("data/test_data_2/generated_data/*png")

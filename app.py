@@ -9,7 +9,7 @@ from model import Net
 
 #AIのモデル関数
 def model():
-    output= output_result('./static/img/predict_img.png',gradcam_flag=False)
+    output = output_result('./static/img/predict_img.png',gradcam_flag=True)
     #print(outputs[0][0].item(), outputs[0][1].item())
     ai_gererate_prob = output.item()
     return ai_gererate_prob
