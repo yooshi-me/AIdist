@@ -1,12 +1,12 @@
 # AIdist
 ### Distinguish between AI-generated images and photographs
 
-[![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/106128166/197309294-6b473a1f-deec-4a2a-9bbf-8a513652fd9d.png)
-]
+![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/106128166/197309294-6b473a1f-deec-4a2a-9bbf-8a513652fd9d.png)
+
 
 ## 製品概要
 ### 背景(製品開発のきっかけ、課題等）
-(https://user-images.githubusercontent.com/106128166/197308969-df713d5c-6cfc-475a-82ba-22a858f34de6.png)
+![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/106128166/197308969-df713d5c-6cfc-475a-82ba-22a858f34de6.png)
 
 近年の急速なAI技術の発展のなかでも、画像処理に関する発展はもっとも目覚ましい。特に直近ではフリーワードを入力すればAIが自動で画像を生成してくれる「Stable Diffusion」などはSNSを中心に盛り上がりを見せている。このような技術は人々の生活に彩りを与えている一方で、９月下旬に起こった静岡県の水害に関するツイートが物議を醸したことに代表されるように、AIによって生成された画像をあたかも現実に起こったものとして拡散されている事例が散見される。AIが生成する精密な画像は人がさらっと見ただけでは、フェイク画像か否かを判別するのは難しい。
 
@@ -32,13 +32,13 @@
 
 - アプリケーションについて
     - フロントエンド
-    - JavaScript, Bootstrap
+     - JavaScript, Bootstrap
 
     - バックエンド
-    -  Flask, Pytorch, OpenCv
+     -  Flask, Pytorch, OpenCv
 
     - インフラ
-    -  Docker
+     -  Docker
 
 #### ハッカソンで開発した独自機能・技術
 * 独自で開発したものの内容をこちらに記載してください
@@ -52,7 +52,7 @@
 カレントディレクトリをB_2215にし、flask runを実行
 http://127.0.0.1:5000に接続
 
-(https://user-images.githubusercontent.com/106128166/197309439-08d42445-53df-48ce-b1f7-19fc25ffeef6.png)
+![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/106128166/197309439-08d42445-53df-48ce-b1f7-19fc25ffeef6.png)
 「その画像を診断してみよう!」をクリック
 
 左下の「Upload」をクリック、診断したい画像を選択
