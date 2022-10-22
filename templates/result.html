@@ -30,7 +30,7 @@
      <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
      <link href="../static/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
      <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
-     <script src="{{url_for('static', filename='js/index.js')}}"></script>
+     
      <link rel="stylesheet" href="{{url_for('static', filename='css/load.css')}}">
      <script src="{{url_for('static', filename='js/load.js')}}"></script>
      <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -67,14 +67,17 @@
                     </label>
                 </div>
                  <div class="langChenge container-fluid">
-                     <a lang="ja" class="navbar-brand langCng" href="#pablo"> 診断結果 </a>
-                     <a lang="en" class="navbar-brand langCng" href="#pablo"> Result </a>
+                     <a lang="ja" class="navbar-brand langCng" href="#pablo"> これ何 </a>
+                     <a lang="en" class="navbar-brand langCng" href="#pablo"> どここれ </a>
+                     <!--
                      <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-bar burger-lines"></span>
                          <span class="navbar-toggler-bar burger-lines"></span>
                          <span class="navbar-toggler-bar burger-lines"></span>
                      </button>
+                    -->
                      <div class="collapse navbar-collapse justify-content-end langChenge" id="navigation">
+                        <!--
                          <ul class="nav navbar-nav mr-auto">
                              <li class="nav-item">
                                  <a href="#" class="nav-link" data-toggle="dropdown">
@@ -84,6 +87,7 @@
                                  </a>
                              </li>
                          </ul>
+                        -->
                          <ul class="navbar-nav ml-auto">
                              <li class="nav-item">
                                  <a class="nav-link" href="/"><!--トップ画面へのリンク-->
@@ -108,7 +112,7 @@
                      <!--円グラフ-->
                      <div class="row">
                          <div class="col">
-                             <div class="card" style="height: 30rem;">
+                             <div class="card">
                                  <div class="langChenge card-header ">
                                      <h4 lang="ja" class="langCng card-title">フェイクの可能性</h4>
                                      <p lang="ja" class="langCng card-category">フェイクの可能性を表示します</p>
@@ -117,12 +121,12 @@
                                  </div>
                                  <div class="card-body">
                                     <div class="row">
-                                        <div class="col ml-3">
+                                        <div class="col-lg-6 ml-md-5">
                                             <canvas id="doughnut-chart" width="500" height="380"></canvas>
                                         </div>
-                                        <div class="col">
-                                            <h3 class="card-title  display-4">AI-generated</h3>
-                                            <h1 class="card-title  display-1">{{ result * 100.0 }}%</h1>
+                                        <div class="col-lg-5">
+                                            <h3 class="card-title  display-4 text-center">AI-generated</h3>
+                                            <h1 class="card-title  display-1 text-center">{{ result * 100.0 }}%</h1>
                                         </div>
                                     </div>
                                  </div>

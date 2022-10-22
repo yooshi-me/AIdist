@@ -1,5 +1,7 @@
 window.onload = ()=>{
     console.log('ローど開始')
+    var wDef = (navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0,2);
+    langSet(wDef);
     sleep(5, function () {
         console.log('5秒経過しました！')
         document.getElementById('loader').remove();
@@ -7,7 +9,6 @@ window.onload = ()=>{
         document.getElementById('unloader ').style.visibility='visible'
     });
 }
-
 function sleep(waitSec, callbackFunc) {
  
     // 経過時間（秒）
@@ -28,5 +29,24 @@ function sleep(waitSec, callbackFunc) {
             if (callbackFunc) callbackFunc();
         }
     }, 1000);
- 
 }
+
+   // =========================================================
+   //      選択された言語のみ表示
+   // =========================================================
+  function langSet(argLang){
+   console.log("Change")
+    // --- 切り替え対象のclass一覧を取得 ----------------------
+    var elm = document.getElementsByClassName("langCng");
+   
+    for (var i = 0; i < elm.length; i++) {
+   
+      // --- 選択された言語と一致は表示、その他は非表示 -------
+      if(elm[i].getAttribute("lang") == argLang){
+        elm[i].style.display = '';
+      }
+      else{
+        elm[i].style.display = 'none';
+      }
+    }
+  }
