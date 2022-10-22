@@ -3,17 +3,13 @@
 
 ![IMAGE ALT TEXT HERE](https://user-images.githubusercontent.com/106128166/197309294-6b473a1f-deec-4a2a-9bbf-8a513652fd9d.png)
 
-
-## 製品概要
-### 背景(製品開発のきっかけ、課題等）
-![image](https://user-images.githubusercontent.com/106128166/197311484-07f9cbfd-e465-4469-98d7-85377f4f7445.png)
-
-
-
 https://user-images.githubusercontent.com/106128166/197318190-d4f87fa4-31f0-42c0-bbba-b67206bfcf7d.mp4
 
 
 
+## 製品概要
+### 背景(製品開発のきっかけ、課題等）
+![image](https://user-images.githubusercontent.com/106128166/197311484-07f9cbfd-e465-4469-98d7-85377f4f7445.png)
 
 近年の急速なAI技術の発展のなかでも、画像処理に関する発展はもっとも目覚ましい。特に直近ではフリーワードを入力すればAIが自動で画像を生成してくれる「Stable Diffusion」などはSNSを中心に盛り上がりを見せている。このような技術は人々の生活に彩りを与えている一方で、9月下旬に起こった静岡県の水害に関するツイートが物議を醸したことに代表されるように、AIによって生成されたフェイク画像をあたかも現実に起こったものとして拡散されている事例が散見される。AIが生成する精密な画像は人がさらっと見ただけでは、フェイク画像か否かを判別するのは難しい。
 
