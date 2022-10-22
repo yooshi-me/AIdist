@@ -217,3 +217,26 @@ body{
 .hidden {
     display: none;
 }
+
+.footer {
+    background-color: #FFFFFF;
+    border-top: 1px solid #e7e7e7;
+    height: 41px;
+    padding: 15px 0;
+    padding-bottom: 15px;
+    color: #9A9A9A;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 5px;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 20px;
+    margin: 10px 3px;
+    text-align: center;
+}
+.container {
+    left: 15px;
+    width: 100%;
+    position: relative;
+    top: -10px;
+}
