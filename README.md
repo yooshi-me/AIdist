@@ -75,4 +75,4 @@ http://127.0.0.1:5000に接続
 - 本アプリケーションはPCでの利用のみを想定しているため、他のデバイスでの対応
 
 
-© 2022 from [Tsukuba University](https://www.tsukuba.ac.jp/), presented by てすとべんきょうず
+© 2022 from [University of Tsukuba](https://www.tsukuba.ac.jp/), presented by てすとべんきょうず
