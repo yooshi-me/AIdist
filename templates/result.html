@@ -37,6 +37,8 @@
      <!--消す
      <link href="../assets/css/demo.css" rel="stylesheet" />
      -->
+    <!--Chart.js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  </head>
  
  <body>
@@ -128,21 +130,21 @@
                      <!--写真-->
                      <div class="row">
                          <div class="col-md-6">
-                             <div class="card ">
+                             <div class="card shadow-lg">
                                  <div class="langChenge card-header ">
                                      <h4 lang="ja" class="langCng card-title">入力画像</h4>
                                      <p lang="ja" class="langCng card-category">あなたが選択した写真</p>
                                      <h4 lang="en" class="langCng card-title">Input image</h4>
                                      <p lang="en" class="langCng card-category">Here are the photos you have selected</p>
                                  </div>
-                                 <div class="card-body ">
+                                 <div class="card-body pl-4">
                                      <!--画像-->
-                                     <img src="..\static\img\default-avatar.png" class="card-img-top" alt="...">
+                                     <img src="static/img/predict_img.png" class="card-img-top" alt="...">
                                  </div>
                              </div>
                          </div>
                          <div class="col-md-6">
-                             <div class="card ">
+                            <div class="card shadow-lg">
                                  <div class="langChenge card-header ">
                                      <h4 lang="ja" class="langCng card-title">GRD-CAN</h4>
                                      <p lang="ja" class="langCng card-category">怪しい部分をマークします</p>
@@ -151,7 +153,7 @@
                                  </div>
                                  <div class="card-body ">
                                      <!--画像-->
-                                     <img src="..\static\img\default-avatar.png" class="card-img-top" alt="...">
+                                     <img src="static/img/grad-cam_img.png" class="card-img-top" alt="...">
                                  </div>
                              </div>
                          </div>
@@ -183,7 +185,57 @@
          </div>
          </div>>
      </div>
+     <!--円グラフの描画設定(chart.js)-->
+    <script>
+        const data = {
+            labels: [
+                'AIの生成画像',
+                '写真'
+            ],
+            datasets: [{
+                label: 'Inference score',
+                data: [{{ result*100.0 }}, {{ 100.0 - result * 100.0 }}],
+            backgroundColor: [
+                'rgb(143, 0, 255, 0.8)',
+                'rgb(0, 133, 255, 0.8)'
+            ],
+            hoverOffset: 3,
+                        }]
+                    };
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        labels: {
+                            boxWidth: 40,
+                            font: {
+                                size: 18,
+                            }
+                        },
+                    }
+                }
+            }
+        };
+    </script>
+    <script>
+        const myChart = new Chart(
+            document.getElementById('doughnut-chart'),
+            config
+        );
+    </script>
      <!--   -->
+    <!--<div class=" graph ">
+        <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+        <div class="legend">
+            <i class="fa fa-circle text-info"></i> フェイク
+            <i class="fa fa-circle text-danger"></i> 写真
+        </div>
+    -->
      <!-- <div class="fixed-plugin">
      <div class="dropdown show-dropdown">
          <a href="#" data-toggle="dropdown">
