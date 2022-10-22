@@ -9,7 +9,7 @@ window.onload = function() {
    //      選択された言語のみ表示
    // =========================================================
   function langSet(argLang){
-   
+   console.log("Change")
     // --- 切り替え対象のclass一覧を取得 ----------------------
     var elm = document.getElementsByClassName("langCng");
    
