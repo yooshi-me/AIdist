@@ -1,7 +1,7 @@
 window.onload = ()=>{
     console.log('ローど開始')
     var wDef = (navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0,2);
-    langSet(wDef);
+    langSet('en');
     sleep(5, function () {
         console.log('5秒経過しました！')
         document.getElementById('loader').remove();

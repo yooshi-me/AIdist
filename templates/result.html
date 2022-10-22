@@ -54,21 +54,21 @@
              <!-- Navbar -->
              <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div id="sample1">
-                    <input type="radio" name="langKbn" id="sJa" onClick="langSet('ja')" checked>
+                    <input type="radio" name="langKbn" id="sJa" onClick="langSet('ja')">
                     <label for="sJa">
                       <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="ja">Japanese</span>
                       <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="en"> 日本語 </span>
                     </label>
                    
-                    <input type="radio" name="langKbn" id="sEn" onClick="langSet('en')">
+                    <input type="radio" name="langKbn" id="sEn" onClick="langSet('en')" checked>
                     <label for="sEn">
                       <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="ja">English</span>
                       <span class="langCng btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" lang="en">英語</span>
                     </label>
                 </div>
                  <div class="langChenge container-fluid">
-                     <a lang="ja" class="navbar-brand langCng" href="#pablo"> これ何 </a>
-                     <a lang="en" class="navbar-brand langCng" href="#pablo"> どここれ </a>
+                     <a lang="ja" class="navbar-brand langCng" href="#pablo"> 診断結果 </a>
+                     <a lang="en" class="navbar-brand langCng" href="#pablo"> Diagnosis </a>
                      <!--
                      <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-bar burger-lines"></span>
@@ -124,9 +124,13 @@
                                         <div class="col-lg-6 ml-md-5">
                                             <canvas id="doughnut-chart" width="500" height="380"></canvas>
                                         </div>
-                                        <div class="col-lg-5">
-                                            <h3 class="card-title  display-4 text-center">AI-generated</h3>
-                                            <h1 class="card-title  display-1 text-center">{{ result * 100.0 }}%</h1>
+                                        <div class="langChenge col-lg-5">
+                                            <h3 lang="en" class="langCng card-title  display-4 text-center">FAKE</h3>
+                                            <h3 lang="ja" class="langCng card-title  display-4 text-center">フェイク</h3>
+                                            <h1 class="card-title  display-1 text-center mb-lg-4">{{ result * 100.0 }}%</h1>
+                                            <h3 lang="en" class="langCng card-title  display-4 text-center pt-4">REAL</h3>
+                                            <h3 lang="ja" class="langCng card-title  display-4 text-center pt-4">リアル</h3>
+                                            <h1 class="card-title  display-1 text-center">{{ 100.0 - result * 100.0 }}%</h1>
                                         </div>
                                     </div>
                                  </div>
@@ -195,15 +199,15 @@
     <script>
         const data = {
             labels: [
-                'AIの生成画像',
-                '写真'
+                'Fake',
+                'Real'
             ],
             datasets: [{
                 label: 'Inference score',
                 data: [{{ result*100.0 }}, {{ 100.0 - result * 100.0 }}],
             backgroundColor: [
-                'rgb(143, 0, 255, 0.8)',
-                'rgb(0, 133, 255, 0.8)'
+                'rgba(75, 125, 240, 0.6)',
+                'rgba(219, 74, 227,0.6)'
             ],
             hoverOffset: 3,
                         }]
@@ -216,7 +220,7 @@
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'right',
+                        position: 'left',
                         labels: {
                             boxWidth: 40,
                             font: {
@@ -224,8 +228,8 @@
                             }
                         },
                     }
-                }
-            }
+                },
+            },
         };
     </script>
     <script>
